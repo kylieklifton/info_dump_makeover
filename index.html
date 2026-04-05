@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Who Owns the Planet?</title>
+
+  <style>
+    /* =====================
+       BASE STYLES
+       Dark theme inspired by Visual Capitalist
+    ===================== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Georgia, 'Times New Roman', serif;
+      background: #0d1117;
+      color: #e6edf3;
+      line-height: 1.7;
+    }
+
+    /* =====================
+       TYPOGRAPHY
+    ===================== */
+    h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      line-height: 1.2;
+    }
+
+    h2 {
+      font-size: 1.8rem;
+      font-weight: 600;
+      margin: 3rem 0 1rem;
+      color: #58a6ff;
+    }
+
+    p {
+      font-size: 1.1rem;
+      margin-bottom: 1.5rem;
+      color: #c9d1d9;
+    }
+
+    a {
+      color: #58a6ff;
+    }
+
+    /* =====================
+       HERO SECTION
+       Original graphic + destroy effect
+    ===================== */
+    .hero {
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      background: #0d1117;
+    }
+
+    .original-graphic {
+      max-width: 90%;
+      max-height: 85vh;
+      transition: transform 1.2s cubic-bezier(0.68, -0.55, 0.27, 1.55),
+                  opacity 0.8s ease-out;
+      transform-origin: center center;
+      cursor: pointer;
+    }
+
+    .original-graphic.destroyed {
+      transform: rotate(15deg) scale(0.3) translateX(200%);
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .scroll-hint {
+      position: absolute;
+      bottom: 2rem;
+      font-size: 0.9rem;
+      color: #8b949e;
+      animation: bounce 2s infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .reveal-text {
+      position: absolute;
+      font-size: 2.5rem;
+      font-weight: 700;
+      opacity: 0;
+      transition: opacity 0.6s ease-in 0.6s;
+      text-align: center;
+      padding: 0 2rem;
+    }
+
+    .reveal-text.visible {
+      opacity: 1;
+    }
+
+    /* =====================
+       MAIN CONTENT
+    ===================== */
+    .content {
+      max-width: 750px;
+      margin: 0 auto;
+      padding: 4rem 1.5rem;
+    }
+
+    .intro {
+      border-left: 3px solid #58a6ff;
+      padding-left: 1.5rem;
+      margin-bottom: 3rem;
+    }
+
+    /* =====================
+       CHART SECTIONS
+       Your ai2html exports go here
+    ===================== */
+    .chart-section {
+      margin: 4rem 0;
+      padding: 2rem 0;
+    }
+
+    .chart-container {
+      margin: 2rem 0;
+      /* ai2html will generate responsive containers */
+    }
+
+    /* =====================
+       DISCLAIMER / FOOTER
+    ===================== */
+    .disclaimer {
+      margin-top: 4rem;
+      padding-top: 2rem;
+      border-top: 1px solid #30363d;
+      font-size: 0.9rem;
+      color: #8b949e;
+    }
+
+    /* =====================
+       RESPONSIVE
+    ===================== */
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 1.8rem;
+      }
+
+      h2 {
+        font-size: 1.4rem;
+      }
+
+      p {
+        font-size: 1rem;
+      }
+
+      .reveal-text {
+        font-size: 1.6rem;
+      }
+
+      .content {
+        padding: 2rem 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==================
+       HERO: Original Infographic
+       Scrolls away to reveal your take
+  ================== -->
+  <section class="hero">
+    <!-- TODO: Add the original infographic image -->
+    <img src="original.jpg" alt="Original Earth's Surface infographic by Visual Capitalist" class="original-graphic">
+
+    <p class="reveal-text">But what does "ownership" even mean?</p>
+    <p class="scroll-hint">Scroll to continue</p>
+  </section>
+
+
+  <!-- ==================
+       MAIN CONTENT
+  ================== -->
+  <main class="content">
+
+    <header class="intro">
+      <h1>We Need to Talk About Who "Owns" the Planet</h1>
+      <p>
+        You've probably seen infographics like the one above. Neat little slices showing
+        which countries are the "biggest." Russia: 3.34%. Canada: 1.96%. Very tidy.
+      </p>
+      <p>
+        But these numbers hide more than they reveal. Let's actually look at what
+        we're claiming—and what that means.
+      </p>
+    </header>
+
+
+    <!-- ==================
+         CHART 1: The Land
+    ================== -->
+    <section class="chart-section">
+      <h2>Everything We Fight Over</h2>
+      <p>
+        All the land. All the borders. Every war, every treaty, every "this is mine"
+        moment in human history—it amounts to less than a third of the planet's surface.
+      </p>
+
+      <div class="chart-container">
+        <!-- TODO: ai2html export for Chart 1 goes here -->
+        <p style="color: #8b949e; text-align: center; padding: 4rem; border: 1px dashed #30363d;">
+          [Chart 1: Land breakdown - ai2html export]
+        </p>
+      </div>
+
+      <p>
+        Write your analysis text here. This is where you get snarky about borders,
+        colonialism, the arbitrary lines drawn by European powers, etc.
+      </p>
+    </section>
+
+
+    <!-- ==================
+         CHART 2: The Ocean Grab
+    ================== -->
+    <section class="chart-section">
+      <h2>The Ocean Grab</h2>
+      <p>
+        But wait—countries don't just claim land. Through Exclusive Economic Zones,
+        nations extend their reach 200 nautical miles offshore. Suddenly, colonial
+        powers with scattered islands become ocean empires.
+      </p>
+
+      <div class="chart-container">
+        <!-- TODO: ai2html export for Chart 2 goes here -->
+        <p style="color: #8b949e; text-align: center; padding: 4rem; border: 1px dashed #30363d;">
+          [Chart 2: EEZ / Ocean claims - ai2html export]
+        </p>
+      </div>
+
+      <p>
+        Write about EEZs, France's massive ocean territory from colonial holdings,
+        what this means for fishing rights, resources, etc.
+      </p>
+    </section>
+
+
+    <!-- ==================
+         CHART 3: International Waters
+    ================== -->
+    <section class="chart-section">
+      <h2>The "Lawless" Majority</h2>
+      <p>
+        And here's the part no one talks about: the largest single chunk of Earth—43%—belongs
+        to no one. International waters. The high seas. "Lawless," we call it.
+      </p>
+
+      <div class="chart-container">
+        <!-- TODO: ai2html export for Chart 3 goes here -->
+        <p style="color: #8b949e; text-align: center; padding: 4rem; border: 1px dashed #30363d;">
+          [Chart 3: International waters - ai2html export]
+        </p>
+      </div>
+
+      <p>
+        But "lawless" really means "not yet carved up." Deep-sea mining, unregulated
+        fishing, plastic dumping—this is the next frontier of exploitation.
+        And powerful nations are already positioning themselves.
+      </p>
+    </section>
+
+
+    <!-- ==================
+         DISCLAIMER
+    ================== -->
+    <footer class="disclaimer">
+      <p>
+        <strong>Source & Disclaimer:</strong> This piece is a narrative remix of
+        <a href="https://www.visualcapitalist.com/" target="_blank">Visual Capitalist's</a>
+        "Earth's Surface" infographic. Original data from UN Statistics Division and Protected Planet.
+        Created for an assignment on transforming infodumps into narrative stories.
+      </p>
+    </footer>
+
+  </main>
+
+
+  <!-- ==================
+       JAVASCRIPT
+       Handles the destroy effect
+  ================== -->
+  <script>
+    const graphic = document.querySelector('.original-graphic');
+    const revealText = document.querySelector('.reveal-text');
+    const scrollHint = document.querySelector('.scroll-hint');
+    let destroyed = false;
+
+    // Trigger on scroll
+    window.addEventListener('scroll', () => {
+      if (!destroyed && window.scrollY > 100) {
+        destroyGraphic();
+      }
+    });
+
+    // Also trigger on click for impatient users
+    graphic.addEventListener('click', () => {
+      if (!destroyed) {
+        destroyGraphic();
+      }
+    });
+
+    function destroyGraphic() {
+      graphic.classList.add('destroyed');
+      revealText.classList.add('visible');
+      scrollHint.style.opacity = '0';
+      destroyed = true;
+    }
+  </script>
+
+</body>
+</html>
