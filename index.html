@@ -5,10 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Who Owns the Planet?</title>
 
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet">
+
   <style>
     /* =====================
-       BASE STYLES
-       Dark theme inspired by Visual Capitalist
+       BASE
     ===================== */
     * {
       margin: 0;
@@ -17,89 +21,220 @@
     }
 
     body {
-      font-family: Georgia, 'Times New Roman', serif;
-      background: #0d1117;
-      color: #e6edf3;
-      line-height: 1.7;
+      font-family: 'Source Sans 3', -apple-system, sans-serif;
+      font-weight: 300;
+      background: #0a0a0b;
+      color: #fafafa;
+      line-height: 1.8;
+      font-size: 18px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    ::selection {
+      background: rgba(255, 255, 255, 0.2);
     }
 
     /* =====================
        TYPOGRAPHY
     ===================== */
     h1 {
-      font-size: 2.5rem;
-      font-weight: 700;
-      margin-bottom: 1.5rem;
-      line-height: 1.2;
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 3.5rem;
+      font-weight: 400;
+      margin-bottom: 2rem;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
     }
 
     h2 {
-      font-size: 1.8rem;
-      font-weight: 600;
-      margin: 3rem 0 1rem;
-      color: #58a6ff;
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 2rem;
+      font-weight: 400;
+      margin: 4rem 0 1.5rem;
+      color: #fafafa;
     }
 
     p {
-      font-size: 1.1rem;
-      margin-bottom: 1.5rem;
-      color: #c9d1d9;
+      font-size: 1.15rem;
+      margin-bottom: 1.75rem;
+      color: rgba(255, 255, 255, 0.75);
     }
 
     a {
-      color: #58a6ff;
+      color: rgba(255, 255, 255, 0.75);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      transition: color 0.2s ease;
+    }
+
+    a:hover {
+      color: #fff;
     }
 
     /* =====================
-       HERO SECTION
-       Original graphic + destroy effect
+       PANGEA SCROLLY SECTION
+    ===================== */
+    .pangea-section {
+      position: relative;
+    }
+
+    .pangea-sticky {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .pangea-image-container {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+
+    .pangea-slide {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.8s ease;
+    }
+
+    .pangea-slide.active {
+      opacity: 1;
+    }
+
+    .pangea-slide img {
+      max-width: 70%;
+      max-height: 70vh;
+      object-fit: contain;
+    }
+
+    .pangea-annotation {
+      position: absolute;
+      bottom: 12%;
+      left: 50%;
+      transform: translateX(-50%);
+      text-align: center;
+      max-width: 600px;
+      padding: 0 2rem;
+    }
+
+    .pangea-annotation .year {
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 0.85rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.5);
+      margin-bottom: 0.75rem;
+    }
+
+    .pangea-annotation .caption {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 2rem;
+      font-style: italic;
+      color: #fafafa;
+      line-height: 1.3;
+    }
+
+    /* Scroll triggers - invisible elements that trigger transitions */
+    .scroll-trigger {
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* =====================
+       HERO - Original infographic tear
     ===================== */
     .hero {
       height: 100vh;
+      min-height: 600px;
       display: flex;
       align-items: center;
       justify-content: center;
       position: relative;
       overflow: hidden;
-      background: #0d1117;
+      background: #0a0a0b;
     }
 
-    .original-graphic {
-      max-width: 90%;
-      max-height: 85vh;
-      transition: transform 1.2s cubic-bezier(0.68, -0.55, 0.27, 1.55),
-                  opacity 0.8s ease-out;
-      transform-origin: center center;
+    .paper-container {
+      position: relative;
+      width: 92vw;
+      height: 92vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       cursor: pointer;
     }
 
-    .original-graphic.destroyed {
-      transform: rotate(15deg) scale(0.3) translateX(200%);
+    .paper-half {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background-image: url('original.jpg');
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1),
+                  opacity 1s ease-out;
+    }
+
+    .paper-left {
+      clip-path: polygon(0 0, 51% 0, 49% 100%, 0 100%);
+      transform-origin: left center;
+    }
+
+    .paper-right {
+      clip-path: polygon(51% 0, 100% 0, 100% 100%, 49% 100%);
+      transform-origin: right center;
+    }
+
+    .paper-left.torn {
+      transform: translateX(-100%) rotate(-8deg);
       opacity: 0;
-      pointer-events: none;
+    }
+
+    .paper-right.torn {
+      transform: translateX(100%) rotate(8deg);
+      opacity: 0;
     }
 
     .scroll-hint {
       position: absolute;
-      bottom: 2rem;
-      font-size: 0.9rem;
-      color: #8b949e;
-      animation: bounce 2s infinite;
+      bottom: 3rem;
+      font-size: 0.85rem;
+      color: rgba(255, 255, 255, 0.4);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      animation: fade-pulse 3s infinite;
+      z-index: 10;
     }
 
-    @keyframes bounce {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
+    @keyframes fade-pulse {
+      0%, 100% { opacity: 0.4; }
+      50% { opacity: 0.7; }
     }
 
     .reveal-text {
       position: absolute;
-      font-size: 2.5rem;
-      font-weight: 700;
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 2.8rem;
+      font-weight: 400;
+      font-style: italic;
       opacity: 0;
-      transition: opacity 0.6s ease-in 0.6s;
+      transition: opacity 0.8s ease-in 0.4s;
       text-align: center;
       padding: 0 2rem;
+      z-index: 5;
     }
 
     .reveal-text.visible {
@@ -110,64 +245,104 @@
        MAIN CONTENT
     ===================== */
     .content {
-      max-width: 750px;
+      max-width: 680px;
       margin: 0 auto;
-      padding: 4rem 1.5rem;
+      padding: 6rem 2rem 4rem;
     }
 
     .intro {
-      border-left: 3px solid #58a6ff;
-      padding-left: 1.5rem;
-      margin-bottom: 3rem;
+      margin-bottom: 4rem;
+    }
+
+    .intro p:first-of-type {
+      font-size: 1.35rem;
+      color: rgba(255, 255, 255, 0.85);
     }
 
     /* =====================
        CHART SECTIONS
-       Your ai2html exports go here
     ===================== */
     .chart-section {
-      margin: 4rem 0;
-      padding: 2rem 0;
+      margin: 5rem 0;
     }
 
     .chart-container {
-      margin: 2rem 0;
-      /* ai2html will generate responsive containers */
+      margin: 2.5rem 0;
+    }
+
+    .chart-placeholder {
+      color: rgba(255, 255, 255, 0.3);
+      text-align: center;
+      padding: 5rem 2rem;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      font-size: 0.9rem;
+      letter-spacing: 0.05em;
     }
 
     /* =====================
-       DISCLAIMER / FOOTER
+       DIVIDERS
+    ===================== */
+    .divider {
+      width: 40px;
+      height: 1px;
+      background: rgba(255, 255, 255, 0.2);
+      margin: 4rem 0;
+    }
+
+    /* =====================
+       DISCLAIMER
     ===================== */
     .disclaimer {
-      margin-top: 4rem;
-      padding-top: 2rem;
-      border-top: 1px solid #30363d;
+      margin-top: 6rem;
+      padding-top: 3rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
       font-size: 0.9rem;
-      color: #8b949e;
+      color: rgba(255, 255, 255, 0.4);
+    }
+
+    .disclaimer strong {
+      color: rgba(255, 255, 255, 0.6);
+      font-weight: 600;
     }
 
     /* =====================
        RESPONSIVE
     ===================== */
     @media (max-width: 600px) {
+      body {
+        font-size: 16px;
+      }
+
       h1 {
-        font-size: 1.8rem;
+        font-size: 2.2rem;
       }
 
       h2 {
-        font-size: 1.4rem;
+        font-size: 1.5rem;
       }
 
       p {
-        font-size: 1rem;
+        font-size: 1.05rem;
+      }
+
+      .pangea-annotation .caption {
+        font-size: 1.5rem;
+      }
+
+      .pangea-slide img {
+        max-width: 90%;
+      }
+
+      .intro p:first-of-type {
+        font-size: 1.15rem;
       }
 
       .reveal-text {
-        font-size: 1.6rem;
+        font-size: 1.8rem;
       }
 
       .content {
-        padding: 2rem 1rem;
+        padding: 3rem 1.25rem;
       }
     }
   </style>
@@ -175,12 +350,67 @@
 <body>
 
   <!-- ==================
-       HERO: Original Infographic
-       Scrolls away to reveal your take
+       PANGEA SCROLLY
+  ================== -->
+  <section class="pangea-section">
+    <div class="pangea-sticky">
+      <div class="pangea-image-container">
+
+        <!-- Slide 1: Pangea breaking -->
+        <div class="pangea-slide active" data-slide="0">
+          <img src="pangea-1.jpg" alt="Earth 170 million years ago">
+          <div class="pangea-annotation">
+            <p class="year">170 million years ago</p>
+            <p class="caption">One supercontinent. No borders. No nations.</p>
+          </div>
+        </div>
+
+        <!-- Slide 2: Drifting apart -->
+        <div class="pangea-slide" data-slide="1">
+          <img src="pangea-2.jpg" alt="Earth 120 million years ago">
+          <div class="pangea-annotation">
+            <p class="year">120 million years ago</p>
+            <p class="caption">The land breaks apart. Oceans widen.</p>
+          </div>
+        </div>
+
+        <!-- Slide 3: Continents forming -->
+        <div class="pangea-slide" data-slide="2">
+          <img src="pangea-3.jpg" alt="Earth 85 million years ago">
+          <div class="pangea-annotation">
+            <p class="year">85 million years ago</p>
+            <p class="caption">Familiar shapes begin to emerge.</p>
+          </div>
+        </div>
+
+        <!-- Slide 4: Almost modern -->
+        <div class="pangea-slide" data-slide="3">
+          <img src="pangea-4.jpg" alt="Earth 60 million years ago">
+          <div class="pangea-annotation">
+            <p class="year">60 million years ago</p>
+            <p class="caption">And then we showed up and drew lines.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Scroll triggers -->
+    <div class="scroll-trigger" data-trigger="0"></div>
+    <div class="scroll-trigger" data-trigger="1"></div>
+    <div class="scroll-trigger" data-trigger="2"></div>
+    <div class="scroll-trigger" data-trigger="3"></div>
+  </section>
+
+
+  <!-- ==================
+       HERO - Original infographic
   ================== -->
   <section class="hero">
-    <!-- TODO: Add the original infographic image -->
-    <img src="original.jpg" alt="Original Earth's Surface infographic by Visual Capitalist" class="original-graphic">
+    <div class="paper-container">
+      <div class="paper-half paper-left"></div>
+      <div class="paper-half paper-right"></div>
+    </div>
 
     <p class="reveal-text">But what does "ownership" even mean?</p>
     <p class="scroll-hint">Scroll to continue</p>
@@ -204,9 +434,10 @@
       </p>
     </header>
 
+    <div class="divider"></div>
 
     <!-- ==================
-         CHART 1: The Land
+         CHART 1
     ================== -->
     <section class="chart-section">
       <h2>Everything We Fight Over</h2>
@@ -216,9 +447,8 @@
       </p>
 
       <div class="chart-container">
-        <!-- TODO: ai2html export for Chart 1 goes here -->
-        <p style="color: #8b949e; text-align: center; padding: 4rem; border: 1px dashed #30363d;">
-          [Chart 1: Land breakdown - ai2html export]
+        <p class="chart-placeholder">
+          Chart 1: Land breakdown
         </p>
       </div>
 
@@ -230,7 +460,7 @@
 
 
     <!-- ==================
-         CHART 2: The Ocean Grab
+         CHART 2
     ================== -->
     <section class="chart-section">
       <h2>The Ocean Grab</h2>
@@ -241,9 +471,8 @@
       </p>
 
       <div class="chart-container">
-        <!-- TODO: ai2html export for Chart 2 goes here -->
-        <p style="color: #8b949e; text-align: center; padding: 4rem; border: 1px dashed #30363d;">
-          [Chart 2: EEZ / Ocean claims - ai2html export]
+        <p class="chart-placeholder">
+          Chart 2: EEZ / Ocean claims
         </p>
       </div>
 
@@ -255,7 +484,7 @@
 
 
     <!-- ==================
-         CHART 3: International Waters
+         CHART 3
     ================== -->
     <section class="chart-section">
       <h2>The "Lawless" Majority</h2>
@@ -265,9 +494,8 @@
       </p>
 
       <div class="chart-container">
-        <!-- TODO: ai2html export for Chart 3 goes here -->
-        <p style="color: #8b949e; text-align: center; padding: 4rem; border: 1px dashed #30363d;">
-          [Chart 3: International waters - ai2html export]
+        <p class="chart-placeholder">
+          Chart 3: International waters
         </p>
       </div>
 
@@ -296,33 +524,68 @@
 
   <!-- ==================
        JAVASCRIPT
-       Handles the destroy effect
   ================== -->
   <script>
-    const graphic = document.querySelector('.original-graphic');
+    // ============ PANGEA SCROLLY ============
+    const slides = document.querySelectorAll('.pangea-slide');
+    const triggers = document.querySelectorAll('.scroll-trigger');
+
+    const observerOptions = {
+      root: null,
+      rootMargin: '-40% 0px -40% 0px',
+      threshold: 0
+    };
+
+    const slideObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const triggerIndex = entry.target.dataset.trigger;
+
+          // Deactivate all slides
+          slides.forEach(slide => slide.classList.remove('active'));
+
+          // Activate the corresponding slide
+          const activeSlide = document.querySelector(`.pangea-slide[data-slide="${triggerIndex}"]`);
+          if (activeSlide) {
+            activeSlide.classList.add('active');
+          }
+        }
+      });
+    }, observerOptions);
+
+    triggers.forEach(trigger => slideObserver.observe(trigger));
+
+
+    // ============ PAPER TEAR ============
+    const paperLeft = document.querySelector('.paper-left');
+    const paperRight = document.querySelector('.paper-right');
     const revealText = document.querySelector('.reveal-text');
     const scrollHint = document.querySelector('.scroll-hint');
-    let destroyed = false;
+    const hero = document.querySelector('.hero');
+    let torn = false;
 
-    // Trigger on scroll
-    window.addEventListener('scroll', () => {
-      if (!destroyed && window.scrollY > 100) {
-        destroyGraphic();
-      }
+    const heroObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && entry.intersectionRatio > 0.5 && !torn) {
+          // Small delay so user sees the graphic first
+          setTimeout(tearPaper, 400);
+        }
+      });
+    }, { threshold: 0.5 });
+
+    heroObserver.observe(hero);
+
+    // Also allow click
+    document.querySelector('.paper-container').addEventListener('click', () => {
+      if (!torn) tearPaper();
     });
 
-    // Also trigger on click for impatient users
-    graphic.addEventListener('click', () => {
-      if (!destroyed) {
-        destroyGraphic();
-      }
-    });
-
-    function destroyGraphic() {
-      graphic.classList.add('destroyed');
+    function tearPaper() {
+      paperLeft.classList.add('torn');
+      paperRight.classList.add('torn');
       revealText.classList.add('visible');
       scrollHint.style.opacity = '0';
-      destroyed = true;
+      torn = true;
     }
   </script>
 
