@@ -194,10 +194,16 @@
     }
 
     .chart-container {
-      margin: 2rem 0;
+      margin: 2rem -2rem;
+      margin-left: calc(-50vw + 50%);
+      margin-right: calc(-50vw + 50%);
+      padding: 2.5rem 2rem;
       background: #ffffff;
-      padding: 1.5rem;
-      border-radius: 4px;
+    }
+
+    .chart-container > div {
+      max-width: 680px;
+      margin: 0 auto;
     }
 
     .chart-placeholder {
