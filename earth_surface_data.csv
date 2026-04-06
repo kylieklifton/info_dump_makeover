@@ -1,0 +1,25 @@
+country,land_percent,category
+Russia,3.34,land
+Canada,1.96,land
+China,1.88,land
+United States,1.87,land
+Brazil,1.67,land
+Australia,1.51,land
+India,0.64,land
+Argentina,0.55,land
+Kazakhstan,0.53,land
+Algeria,0.47,land
+DRC,0.46,land
+Greenland,0.42,land
+Saudi Arabia,0.42,land
+Mexico,0.39,land
+Indonesia,0.37,land
+Libya,0.34,land
+Sudan,0.34,land
+Iran,0.32,land
+Mongolia,0.31,land
+Peru,0.25,land
+Rest of World,14.0,land
+Antarctica,2.75,other
+Territorial Waters + EEZ,27.0,ocean
+International Waters,43.0,ocean

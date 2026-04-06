@@ -167,7 +167,15 @@
       margin-bottom: 4rem;
     }
 
-    .intro p:first-of-type {
+    .byline {
+      font-size: 0.9rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.5);
+      margin-bottom: 1rem;
+    }
+
+    .intro p:not(.byline):first-of-type {
       font-size: 1.35rem;
       color: rgba(255, 255, 255, 0.85);
     }
@@ -324,6 +332,7 @@
   <main class="content">
 
     <header class="intro">
+      <p class="byline">By Kylie Clifton</p>
       <h1></h1>
       <p></p>
     </header>
