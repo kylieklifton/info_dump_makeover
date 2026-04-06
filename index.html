@@ -10,6 +10,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet">
 
+  <!-- Globe.gl -->
+  <script src="https://unpkg.com/globe.gl@2.27.2/dist/globe.gl.min.js"></script>
+
   <style>
     /* =====================
        BASE
@@ -242,6 +245,111 @@
     }
 
     /* =====================
+       GLOBE SCROLLY SECTION
+    ===================== */
+    .globe-section {
+      position: relative;
+      background: var(--globe-bg, #0a0a0b);
+      min-height: 100vh;
+    }
+
+    .globe-sticky {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    .globe-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      transition: transform 0.8s ease;
+    }
+
+    /* Globe positioning */
+    .globe-container.globe-left {
+      transform: translateX(-20%);
+    }
+
+    .globe-container.globe-center {
+      transform: translateX(0);
+    }
+
+    .globe-container.globe-right {
+      transform: translateX(20%);
+    }
+
+    /* Step text overlay */
+    .globe-step-text {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      max-width: 400px;
+      padding: 2rem;
+      z-index: 10;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+
+    .globe-step-text.active {
+      opacity: 1;
+    }
+
+    .globe-step-text.text-left {
+      left: 5%;
+      right: auto;
+    }
+
+    .globe-step-text.text-center {
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+    }
+
+    .globe-step-text.text-right {
+      left: auto;
+      right: 5%;
+      text-align: right;
+    }
+
+    .globe-step-text h2 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      color: #fafafa;
+    }
+
+    .globe-step-text p {
+      font-size: 1.1rem;
+      color: rgba(255, 255, 255, 0.85);
+      line-height: 1.7;
+    }
+
+    /* Scroll triggers for globe */
+    .globe-trigger {
+      height: var(--step-height, 100vh);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+    }
+
+    /* Globe marker labels */
+    .globe-label {
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      text-shadow: 0 0 8px rgba(0,0,0,0.8), 0 0 4px rgba(0,0,0,0.9);
+      pointer-events: none;
+    }
+
+    /* =====================
        RESPONSIVE
     ===================== */
     @media (max-width: 600px) {
@@ -280,6 +388,24 @@
       .chart-section {
         margin: 3rem 0;
         padding-top: 1.5rem;
+      }
+
+      .globe-step-text {
+        max-width: 280px;
+        padding: 1.5rem;
+      }
+
+      .globe-step-text h2 {
+        font-size: 1.5rem;
+      }
+
+      .globe-step-text p {
+        font-size: 1rem;
+      }
+
+      .globe-container.globe-left,
+      .globe-container.globe-right {
+        transform: translateX(0);
       }
     }
   </style>
@@ -340,6 +466,20 @@
   </section>
 
 
+  <!-- ==================
+       GLOBE SCROLLY
+  ================== -->
+  <section class="globe-section" id="globe-section">
+    <div class="globe-sticky">
+      <div class="globe-container globe-center" id="globe-container"></div>
+
+      <!-- Step text overlays - will be populated by JS -->
+      <div class="globe-step-texts" id="globe-step-texts"></div>
+    </div>
+
+    <!-- Scroll triggers - will be populated by JS -->
+    <div class="globe-triggers" id="globe-triggers"></div>
+  </section>
 
 
   <!-- ==================
@@ -1247,6 +1387,308 @@
     }, observerOptions);
 
     triggers.forEach(trigger => slideObserver.observe(trigger));
+
+
+    // ============ GLOBE SCROLLY ============
+
+    // Check if Globe.gl loaded
+    if (typeof Globe === 'undefined') {
+      console.error('Globe.gl library not loaded. Make sure the script tag is correct.');
+    } else {
+      initGlobeScrolly();
+    }
+
+    function initGlobeScrolly() {
+
+    // ===========================================
+    // CONFIGURATION - Edit these to customize!
+    // ===========================================
+
+    const globeConfig = {
+      // Globe colors
+      backgroundColor: '#0a0a0b',
+      waterColor: '#1a3a5c',
+      landColor: '#2d5a3d',
+      atmosphereColor: 'rgba(100, 150, 255, 0.3)',
+
+      // Step spacing
+      stepHeight: '100vh',
+
+      // Globe textures for different eras
+      textures: {
+        present: 'https://unpkg.com/three-globe/example/img/earth-blue-marble.jpg',
+        night: 'https://unpkg.com/three-globe/example/img/earth-night.jpg',
+        topology: 'https://unpkg.com/three-globe/example/img/earth-topology.png',
+        // Add your own Pangea/continental drift textures here:
+        // pangea: 'path/to/pangea-texture.jpg',
+        // cretaceous: 'path/to/cretaceous-texture.jpg',
+      },
+
+      // Default marker style
+      defaultMarkerColor: '#ff4444',
+      defaultMarkerSize: 0.8,
+      defaultLabelColor: '#ffffff',
+    };
+
+    // ===========================================
+    // STEPS - Each step in your scrollytelling
+    // ===========================================
+
+    const globeSteps = [
+      {
+        // Step 0: Opening view
+        text: `<h2>A World of Borders</h2>
+               <p>We've carved up the planet. But to understand what we've done, we need to zoom out.</p>`,
+        textPosition: 'right',    // left | center | right
+        globePosition: 'left',    // left | center | right
+        coordinates: { lat: 20, lng: 0 },
+        zoom: 2.5,                // altitude multiplier (1 = close, 4 = far)
+        markers: [],
+        transition: 'smooth',     // smooth | instant
+        era: 'present',           // texture to use
+      },
+      {
+        // Step 1: Russia
+        text: `<h2>Russia</h2>
+               <p>The largest country on Earth. 17.1 million km². It looks massive—but it's only 3.34% of Earth's surface.</p>`,
+        textPosition: 'right',
+        globePosition: 'left',
+        coordinates: { lat: 61.524, lng: 105.3188 },
+        zoom: 1.8,
+        markers: [
+          { lat: 55.7558, lng: 37.6173, label: 'Moscow', color: '#ff4444' }
+        ],
+        transition: 'smooth',
+        era: 'present',
+      },
+      {
+        // Step 2: United States
+        text: `<h2>United States</h2>
+               <p>9.8 million km². The world's third-largest country by area. Just 1.87% of the planet.</p>`,
+        textPosition: 'left',
+        globePosition: 'right',
+        coordinates: { lat: 39.8283, lng: -98.5795 },
+        zoom: 2.0,
+        markers: [
+          { lat: 38.9072, lng: -77.0369, label: 'Washington D.C.', color: '#ff4444' }
+        ],
+        transition: 'smooth',
+        era: 'present',
+      },
+      {
+        // Step 3: China
+        text: `<h2>China</h2>
+               <p>1.4 billion people. The world's largest population. 1.88% of Earth's surface.</p>`,
+        textPosition: 'right',
+        globePosition: 'left',
+        coordinates: { lat: 35.8617, lng: 104.1954 },
+        zoom: 2.0,
+        markers: [
+          { lat: 39.9042, lng: 116.4074, label: 'Beijing', color: '#ff4444' }
+        ],
+        transition: 'smooth',
+        era: 'present',
+      },
+      {
+        // Step 4: Multiple markers example
+        text: `<h2>Top 3 by Land</h2>
+               <p>Russia, Canada, and the United States together control about 7% of Earth. All that territory—less than a tenth of the planet.</p>`,
+        textPosition: 'center',
+        globePosition: 'center',
+        coordinates: { lat: 50, lng: -40 },
+        zoom: 2.8,
+        markers: [
+          { lat: 55.7558, lng: 37.6173, label: 'Russia', color: '#ff4444' },
+          { lat: 56.1304, lng: -106.3468, label: 'Canada', color: '#4488ff' },
+          { lat: 39.8283, lng: -98.5795, label: 'USA', color: '#44ff88' }
+        ],
+        transition: 'smooth',
+        era: 'present',
+      },
+      {
+        // Step 5: The ocean
+        text: `<h2>The Unclaimed Majority</h2>
+               <p>And then there's the rest. 43% of Earth's surface. No flags. No borders. The high seas.</p>`,
+        textPosition: 'right',
+        globePosition: 'left',
+        coordinates: { lat: 0, lng: -160 },
+        zoom: 2.0,
+        markers: [],
+        transition: 'smooth',
+        era: 'present',
+      },
+    ];
+
+
+    // ===========================================
+    // GLOBE INITIALIZATION
+    // ===========================================
+
+    const globeContainer = document.getElementById('globe-container');
+    const globeStepTexts = document.getElementById('globe-step-texts');
+    const globeTriggers = document.getElementById('globe-triggers');
+
+    // Set step height CSS variable
+    document.querySelector('.globe-section').style.setProperty('--step-height', globeConfig.stepHeight);
+    document.querySelector('.globe-section').style.setProperty('--globe-bg', globeConfig.backgroundColor);
+
+    // Create the globe
+    const globe = Globe()
+      .globeImageUrl(globeConfig.textures.present)
+      .bumpImageUrl('https://unpkg.com/three-globe/example/img/earth-topology.png')
+      .backgroundImageUrl(null)
+      .backgroundColor(globeConfig.backgroundColor)
+      .atmosphereColor(globeConfig.atmosphereColor)
+      .atmosphereAltitude(0.15)
+      .pointsData([])
+      .pointAltitude(0.01)
+      .pointRadius(d => d.size || globeConfig.defaultMarkerSize)
+      .pointColor(d => d.color || globeConfig.defaultMarkerColor)
+      .labelsData([])
+      .labelLat(d => d.lat)
+      .labelLng(d => d.lng)
+      .labelText(d => d.label)
+      .labelSize(1.5)
+      .labelColor(d => d.labelColor || globeConfig.defaultLabelColor)
+      .labelDotRadius(0.4)
+      .labelDotOrientation(() => 'bottom')
+      .labelResolution(2)
+      (globeContainer);
+
+    // Resize globe to fit container
+    function resizeGlobe() {
+      const width = window.innerWidth;
+      const height = window.innerHeight;
+      globe.width(width);
+      globe.height(height);
+    }
+    resizeGlobe();
+    window.addEventListener('resize', resizeGlobe);
+
+    // Disable auto-rotation and user interaction for scrollytelling
+    globe.controls().autoRotate = false;
+    globe.controls().enableZoom = false;
+    globe.controls().enableRotate = false;
+    globe.controls().enablePan = false;
+
+
+    // ===========================================
+    // DYNAMIC UI GENERATION
+    // ===========================================
+
+    // Create step text overlays
+    globeSteps.forEach((step, index) => {
+      const textDiv = document.createElement('div');
+      textDiv.className = `globe-step-text text-${step.textPosition}${index === 0 ? ' active' : ''}`;
+      textDiv.dataset.step = index;
+      textDiv.innerHTML = step.text;
+      globeStepTexts.appendChild(textDiv);
+    });
+
+    // Create scroll triggers
+    globeSteps.forEach((step, index) => {
+      const trigger = document.createElement('div');
+      trigger.className = 'globe-trigger';
+      trigger.dataset.globeTrigger = index;
+      globeTriggers.appendChild(trigger);
+    });
+
+
+    // ===========================================
+    // GLOBE STATE MANAGEMENT
+    // ===========================================
+
+    let currentStep = 0;
+    let isTransitioning = false;
+
+    function updateGlobeState(stepIndex, instant = false) {
+      const step = globeSteps[stepIndex];
+      if (!step) return;
+
+      // Update globe position (left/center/right)
+      const container = document.getElementById('globe-container');
+      container.className = `globe-container globe-${step.globePosition}`;
+
+      // Update text visibility
+      document.querySelectorAll('.globe-step-text').forEach((el, i) => {
+        el.classList.toggle('active', i === stepIndex);
+      });
+
+      // Update markers/labels
+      const markers = step.markers || [];
+      globe.pointsData(markers.map(m => ({
+        lat: m.lat,
+        lng: m.lng,
+        size: m.size || globeConfig.defaultMarkerSize,
+        color: m.color || globeConfig.defaultMarkerColor
+      })));
+
+      globe.labelsData(markers.filter(m => m.label).map(m => ({
+        lat: m.lat,
+        lng: m.lng,
+        label: m.label,
+        labelColor: m.textColor || globeConfig.defaultLabelColor
+      })));
+
+      // Update texture/era if changed
+      const texture = globeConfig.textures[step.era] || globeConfig.textures.present;
+      globe.globeImageUrl(texture);
+
+      // Calculate camera position
+      const altitude = step.zoom || 2.5;
+      const duration = (step.transition === 'instant' || instant) ? 0 : 1500;
+
+      // Move camera to coordinates
+      globe.pointOfView({
+        lat: step.coordinates.lat,
+        lng: step.coordinates.lng,
+        altitude: altitude
+      }, duration);
+
+      currentStep = stepIndex;
+    }
+
+    // Initialize first step
+    updateGlobeState(0, true);
+
+
+    // ===========================================
+    // INTERSECTION OBSERVER FOR SCROLLING
+    // ===========================================
+
+    const globeObserverOptions = {
+      root: null,
+      rootMargin: '-40% 0px -40% 0px',
+      threshold: 0
+    };
+
+    const globeObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const stepIndex = parseInt(entry.target.dataset.globeTrigger);
+          if (stepIndex !== currentStep) {
+            updateGlobeState(stepIndex);
+          }
+        }
+      });
+    }, globeObserverOptions);
+
+    document.querySelectorAll('.globe-trigger').forEach(trigger => {
+      globeObserver.observe(trigger);
+    });
+
+
+    // ===========================================
+    // UTILITY: Jump to step (for testing)
+    // ===========================================
+    window.goToGlobeStep = function(stepIndex) {
+      updateGlobeState(stepIndex, false);
+    };
+
+    console.log('Globe scrolly initialized successfully');
+
+    } // end initGlobeScrolly
+
   </script>
 
 </body>
