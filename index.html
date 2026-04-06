@@ -112,36 +112,38 @@
     }
 
     .pangea-slide img {
-      max-width: 70%;
-      max-height: 70vh;
+      max-width: 65%;
+      max-height: 55vh;
       object-fit: contain;
+      margin-bottom: 10vh;
     }
 
     .pangea-annotation {
       position: absolute;
-      bottom: 12%;
+      bottom: 4%;
       left: 50%;
       transform: translateX(-50%);
       text-align: center;
       max-width: 600px;
-      padding: 0 2rem;
+      padding: 1.5rem 2rem;
+      background: linear-gradient(to top, rgba(10, 10, 11, 0.95), rgba(10, 10, 11, 0.7), transparent);
     }
 
     .pangea-annotation .year {
       font-family: 'Source Sans 3', sans-serif;
-      font-size: 0.85rem;
-      letter-spacing: 0.2em;
+      font-size: 0.8rem;
+      letter-spacing: 0.25em;
       text-transform: uppercase;
-      color: rgba(255, 255, 255, 0.5);
-      margin-bottom: 0.75rem;
+      color: rgba(255, 255, 255, 0.6);
+      margin-bottom: 0.5rem;
     }
 
     .pangea-annotation .caption {
       font-family: 'Playfair Display', Georgia, serif;
-      font-size: 2rem;
+      font-size: 1.6rem;
       font-style: italic;
       color: #fafafa;
-      line-height: 1.3;
+      line-height: 1.4;
     }
 
     /* Scroll triggers - invisible elements that trigger transitions */
@@ -150,95 +152,6 @@
       display: flex;
       align-items: center;
       justify-content: center;
-    }
-
-    /* =====================
-       HERO - Original infographic tear
-    ===================== */
-    .hero {
-      height: 100vh;
-      min-height: 600px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      overflow: hidden;
-      background: #0a0a0b;
-    }
-
-    .paper-container {
-      position: relative;
-      width: 92vw;
-      height: 92vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-    }
-
-    .paper-half {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      background-image: url('original.jpg');
-      background-size: contain;
-      background-repeat: no-repeat;
-      background-position: center;
-      transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1),
-                  opacity 1s ease-out;
-    }
-
-    .paper-left {
-      clip-path: polygon(0 0, 51% 0, 49% 100%, 0 100%);
-      transform-origin: left center;
-    }
-
-    .paper-right {
-      clip-path: polygon(51% 0, 100% 0, 100% 100%, 49% 100%);
-      transform-origin: right center;
-    }
-
-    .paper-left.torn {
-      transform: translateX(-100%) rotate(-8deg);
-      opacity: 0;
-    }
-
-    .paper-right.torn {
-      transform: translateX(100%) rotate(8deg);
-      opacity: 0;
-    }
-
-    .scroll-hint {
-      position: absolute;
-      bottom: 3rem;
-      font-size: 0.85rem;
-      color: rgba(255, 255, 255, 0.4);
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      animation: fade-pulse 3s infinite;
-      z-index: 10;
-    }
-
-    @keyframes fade-pulse {
-      0%, 100% { opacity: 0.4; }
-      50% { opacity: 0.7; }
-    }
-
-    .reveal-text {
-      position: absolute;
-      font-family: 'Playfair Display', Georgia, serif;
-      font-size: 2.8rem;
-      font-weight: 400;
-      font-style: italic;
-      opacity: 0;
-      transition: opacity 0.8s ease-in 0.4s;
-      text-align: center;
-      padding: 0 2rem;
-      z-index: 5;
-    }
-
-    .reveal-text.visible {
-      opacity: 1;
     }
 
     /* =====================
@@ -403,18 +316,6 @@
   </section>
 
 
-  <!-- ==================
-       HERO - Original infographic
-  ================== -->
-  <section class="hero">
-    <div class="paper-container">
-      <div class="paper-half paper-left"></div>
-      <div class="paper-half paper-right"></div>
-    </div>
-
-    <p class="reveal-text">But what does "ownership" even mean?</p>
-    <p class="scroll-hint">Scroll to continue</p>
-  </section>
 
 
   <!-- ==================
@@ -423,15 +324,8 @@
   <main class="content">
 
     <header class="intro">
-      <h1>We Need to Talk About Who "Owns" the Planet</h1>
-      <p>
-        You've probably seen infographics like the one above. Neat little slices showing
-        which countries are the "biggest." Russia: 3.34%. Canada: 1.96%. Very tidy.
-      </p>
-      <p>
-        But these numbers hide more than they reveal. Let's actually look at what
-        we're claiming—and what that means.
-      </p>
+      <h1></h1>
+      <p></p>
     </header>
 
     <div class="divider"></div>
@@ -440,22 +334,16 @@
          CHART 1
     ================== -->
     <section class="chart-section">
-      <h2>Everything We Fight Over</h2>
-      <p>
-        All the land. All the borders. Every war, every treaty, every "this is mine"
-        moment in human history—it amounts to less than a third of the planet's surface.
-      </p>
+      <h2></h2>
+      <p></p>
 
       <div class="chart-container">
         <p class="chart-placeholder">
-          Chart 1: Land breakdown
+          Chart 1
         </p>
       </div>
 
-      <p>
-        Write your analysis text here. This is where you get snarky about borders,
-        colonialism, the arbitrary lines drawn by European powers, etc.
-      </p>
+      <p></p>
     </section>
 
 
@@ -463,23 +351,16 @@
          CHART 2
     ================== -->
     <section class="chart-section">
-      <h2>The Ocean Grab</h2>
-      <p>
-        But wait—countries don't just claim land. Through Exclusive Economic Zones,
-        nations extend their reach 200 nautical miles offshore. Suddenly, colonial
-        powers with scattered islands become ocean empires.
-      </p>
+      <h2></h2>
+      <p></p>
 
       <div class="chart-container">
         <p class="chart-placeholder">
-          Chart 2: EEZ / Ocean claims
+          Chart 2
         </p>
       </div>
 
-      <p>
-        Write about EEZs, France's massive ocean territory from colonial holdings,
-        what this means for fishing rights, resources, etc.
-      </p>
+      <p></p>
     </section>
 
 
@@ -487,23 +368,16 @@
          CHART 3
     ================== -->
     <section class="chart-section">
-      <h2>The "Lawless" Majority</h2>
-      <p>
-        And here's the part no one talks about: the largest single chunk of Earth—43%—belongs
-        to no one. International waters. The high seas. "Lawless," we call it.
-      </p>
+      <h2></h2>
+      <p></p>
 
       <div class="chart-container">
         <p class="chart-placeholder">
-          Chart 3: International waters
+          Chart 3
         </p>
       </div>
 
-      <p>
-        But "lawless" really means "not yet carved up." Deep-sea mining, unregulated
-        fishing, plastic dumping—this is the next frontier of exploitation.
-        And powerful nations are already positioning themselves.
-      </p>
+      <p></p>
     </section>
 
 
@@ -554,39 +428,6 @@
     }, observerOptions);
 
     triggers.forEach(trigger => slideObserver.observe(trigger));
-
-
-    // ============ PAPER TEAR ============
-    const paperLeft = document.querySelector('.paper-left');
-    const paperRight = document.querySelector('.paper-right');
-    const revealText = document.querySelector('.reveal-text');
-    const scrollHint = document.querySelector('.scroll-hint');
-    const hero = document.querySelector('.hero');
-    let torn = false;
-
-    const heroObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting && entry.intersectionRatio > 0.5 && !torn) {
-          // Small delay so user sees the graphic first
-          setTimeout(tearPaper, 400);
-        }
-      });
-    }, { threshold: 0.5 });
-
-    heroObserver.observe(hero);
-
-    // Also allow click
-    document.querySelector('.paper-container').addEventListener('click', () => {
-      if (!torn) tearPaper();
-    });
-
-    function tearPaper() {
-      paperLeft.classList.add('torn');
-      paperRight.classList.add('torn');
-      revealText.classList.add('visible');
-      scrollHint.style.opacity = '0';
-      torn = true;
-    }
   </script>
 
 </body>
